@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import Constants from 'expo-constants';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { TouchableOpacity } from 'react-native';
 
 export const Collectors = styled.View`
@@ -35,7 +35,7 @@ export const Map = styled(MapView)`
 	height: 100%;
 `;
 
-export const MapMarker = styled.View`
+export const MapMarker = styled(Marker)`
 	width: 90px;
 	height: 80px;
 `;
@@ -57,8 +57,7 @@ export const MapMarkerCover = styled.View`
 
 export const ItemsContainer = styled.View`
 	flex-direction: row;
-	margin-top: 16px;
-	margin-bottom: 32px;
+	margin: 16px 16px 32px 16px;
 `;
 
 export const Item = styled(TouchableOpacity)`
@@ -73,4 +72,36 @@ export const Item = styled(TouchableOpacity)`
 	align-items: center;
 	justify-content: space-between;
 	text-align: center;
+`;
+
+export const ItemTitle = styled.Text`
+	font-family: Dosis_400Regular;
+	text-align: center;
+	font-size: 13px;
+`;
+
+export const MapMarkerImage = styled.Image`
+	width: 90px;
+	height: 45px;
+`;
+
+export const MapMarkerTitle = styled.Text`
+	flex: 1;
+	font-family: Dosis_400Regular;
+	color: #fff;
+	font-size: 13px;
+	line-height: 23px;
+`;
+
+export const ArrowDown = styled.View`
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-left-width: 10px;
+	border-left-color: transparent;
+	border-right-width: 10px;
+	border-right-color: transparent;
+	border-top-color: #34cb97;
+	border-top-width: 10px;
+	align-self: center;
 `;
