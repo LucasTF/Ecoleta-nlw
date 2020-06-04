@@ -4,7 +4,7 @@ import { AppLoading } from 'expo';
 import { Dosis_400Regular, Dosis_500Medium } from '@expo-google-fonts/dosis';
 import { Ubuntu_700Bold, useFonts } from '@expo-google-fonts/ubuntu';
 
-import Home from './src/containers/Home';
+import Routes from './src/routes';
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
@@ -24,7 +24,7 @@ export default function App() {
 				backgroundColor='transparent'
 				translucent
 			/>
-			<Home />
+			<Routes />
 		</>
 	);
 }

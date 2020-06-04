@@ -1,10 +1,17 @@
 import React from 'react';
 import { Image, Text } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import * as Styled from './styles';
 
 const Home = () => {
+	const navigation = useNavigation();
+
+	function navToCollectorsPageHandler() {
+		navigation.navigate('Collectors');
+	}
+
 	return (
 		<Styled.Home
 			source={require('../../assets/home-background.png')}
@@ -20,7 +27,7 @@ const Home = () => {
 					eficiente.
 				</Styled.Description>
 			</Styled.Main>
-			<Styled.Button onPress={() => {}}>
+			<Styled.Button onPress={navToCollectorsPageHandler}>
 				<Styled.ButtonIcon>
 					<Icon name='arrow-right' color='#FFF' size={24} />
 				</Styled.ButtonIcon>
