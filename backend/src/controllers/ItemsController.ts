@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import knex from '../database/connection';
+import { IP_ADDRESS } from '../environment';
 
 interface Item {
 	id: number;
@@ -16,7 +17,7 @@ class ItemsController {
 			return {
 				id: item.id,
 				title: item.title,
-				imageUrl: `http://localhost:3333/assets/${item.image}`,
+				imageUrl: `http://${IP_ADDRESS}:3333/assets/${item.image}`,
 			};
 		});
 
