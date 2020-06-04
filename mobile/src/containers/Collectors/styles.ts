@@ -3,6 +3,10 @@ import Constants from 'expo-constants';
 import MapView, { Marker } from 'react-native-maps';
 import { TouchableOpacity } from 'react-native';
 
+interface IItemProps {
+	selected: boolean;
+}
+
 export const Collectors = styled.View`
 	flex: 1;
 	padding: 0 32px;
@@ -61,9 +65,11 @@ export const ItemsContainer = styled.View`
 `;
 
 export const Item = styled(TouchableOpacity)`
-	background-color: #fff;
+	background-color: ${(props: IItemProps) =>
+		props.selected ? '#e1faec' : '#fff'};
 	border-width: 2px;
-	border-color: #eee;
+	border-color: ${(props: IItemProps) =>
+		props.selected ? '#34cb79' : '#eee'};
 	height: 120px;
 	width: 120px;
 	border-radius: 8px;

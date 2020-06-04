@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { StyleSheet } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Constants from 'expo-constants';
 
@@ -49,7 +48,7 @@ export const AddressContent = styled.Text`
 `;
 
 export const Footer = styled.View`
-	border-top-width: ${StyleSheet.hairlineWidth};
+	border-top-width: 1px;
 	border-color: #999;
 	padding: 20px 32px;
 	flex-direction: row;
