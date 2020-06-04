@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SvgUri } from 'react-native-svg';
@@ -20,13 +20,8 @@ const Collectors = () => {
 	return (
 		<>
 			<Styled.Collectors>
-				<TouchableOpacity>
-					<Icon
-						name='arrow-left'
-						size={20}
-						color='#34cb79'
-						onPress={navBackHandler}
-					/>
+				<TouchableOpacity onPress={navBackHandler}>
+					<Icon name='arrow-left' size={24} color='#34cb79' />
 				</TouchableOpacity>
 
 				<Styled.Title>Bem vindo.</Styled.Title>
