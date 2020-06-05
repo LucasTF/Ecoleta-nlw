@@ -5,6 +5,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import axios from 'axios';
 
 import Maps from '../../components/Maps';
+import Dropzone from '../../components/Dropzone';
 import Axios from '../../utils/axios';
 import { HOME } from '../../routes';
 import { StyledCreateCollector } from './styles';
@@ -36,6 +37,7 @@ const CreateCollector: React.FC = () => {
 		[number, number] | null
 	>(null);
 	const [selectedItems, setSelectedItems] = useState<number[]>([]);
+	const [selectedImage, setSelectedImage] = useState<File>();
 
 	const [formData, setFormData] = useState({
 		name: '',
@@ -111,16 +113,18 @@ const CreateCollector: React.FC = () => {
 	async function formSubmitHandler(event: FormEvent) {
 		event.preventDefault();
 
-		const data = {
-			name: formData.name,
-			email: formData.email,
-			whatsapp: formData.whatsapp,
-			latitude: selectedPosition?.[0],
-			longitude: selectedPosition?.[1],
-			uf: selectedUf,
-			city: selectedCity,
-			items: selectedItems,
-		};
+		const data = new FormData();
+
+		data.append('name', formData.name);
+		data.append('email', formData.email);
+		data.append('whatsapp', formData.whatsapp);
+		data.append('latitude', String(selectedPosition?.[0]));
+		data.append('longitude', String(selectedPosition?.[1]));
+		data.append('uf', selectedUf);
+		data.append('city', selectedCity);
+		data.append('items', selectedItems.join(','));
+
+		if (selectedImage) data.append('image', selectedImage);
 
 		await Axios.post('collectors', data);
 
@@ -140,6 +144,9 @@ const CreateCollector: React.FC = () => {
 			</header>
 			<form onSubmit={formSubmitHandler}>
 				<h1>Cadastro do ponto de coleta</h1>
+
+				<Dropzone onFileUploaded={setSelectedImage} />
+
 				<fieldset>
 					<legend>
 						<h2>Dados</h2>
