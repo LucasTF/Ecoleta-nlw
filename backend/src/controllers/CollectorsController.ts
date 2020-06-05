@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import knex from '../database/connection';
+import { IP_ADDRESS } from '../environment';
 
 class CollectorsController {
 	async index(request: Request, response: Response) {
@@ -23,7 +24,14 @@ class CollectorsController {
 			.distinct()
 			.select('collectors.*');
 
-		return response.json(collectors);
+		const serializedCollectors = collectors.map(collector => {
+			return {
+				...collector,
+				image_url: `http://${IP_ADDRESS}:3333/uploads/${collector.image}`,
+			};
+		});
+
+		return response.json(serializedCollectors);
 	}
 
 	async show(request: Request, response: Response) {
@@ -46,7 +54,12 @@ class CollectorsController {
 			.where('collectors_items.collector_id', id)
 			.select('items.title');
 
-		return response.json({ collector, items });
+		const serializedCollector = {
+			...collector,
+			image_url: `http://${IP_ADDRESS}:3333/uploads/${collector.image}`,
+		};
+
+		return response.json({ collector: serializedCollector, items });
 	}
 
 	async create(request: Request, response: Response) {
@@ -64,8 +77,7 @@ class CollectorsController {
 		const trx = await knex.transaction();
 
 		const collector = {
-			image:
-				'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+			image: request.file.filename,
 			name,
 			email,
 			whatsapp,
@@ -81,12 +93,15 @@ class CollectorsController {
 
 		const collector_id = insertedId[0];
 
-		const collectorItems = items.map((item_id: number) => {
-			return {
-				collector_id,
-				item_id,
-			};
-		});
+		const collectorItems = items
+			.split(',')
+			.map((item: string) => Number(item.trim()))
+			.map((item_id: number) => {
+				return {
+					collector_id,
+					item_id,
+				};
+			});
 
 		await trx('collectors_items').insert(collectorItems);
 
