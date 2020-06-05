@@ -14,6 +14,7 @@ interface IParams {
 interface IData {
 	collector: {
 		image: string;
+		image_url: string;
 		name: string;
 		email: string;
 		whatsapp: string;
@@ -69,7 +70,7 @@ const Details = () => {
 
 				<Styled.CollectorImage
 					source={{
-						uri: data.collector.image,
+						uri: data.collector.image_url,
 					}}
 				></Styled.CollectorImage>
 

@@ -18,6 +18,7 @@ interface ICollector {
 	id: number;
 	name: string;
 	image: string;
+	image_url: string;
 	latitude: string;
 	longitude: string;
 }
@@ -138,7 +139,7 @@ const Collectors = () => {
 										<Styled.MapMarkerImage
 											resizeMode='cover'
 											source={{
-												uri: collector.image,
+												uri: collector.image_url,
 											}}
 										/>
 										<Styled.MapMarkerTitle>

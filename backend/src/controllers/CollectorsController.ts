@@ -3,26 +3,47 @@ import { Request, Response } from 'express';
 import knex from '../database/connection';
 import { IP_ADDRESS } from '../environment';
 
+interface ICollector {
+	id: number;
+	image: string;
+	name: string;
+	email: string;
+	whatsapp: string;
+	latitude: string;
+	longitude: string;
+	uf: string;
+	city: string;
+	image_url: string;
+}
+
 class CollectorsController {
 	async index(request: Request, response: Response) {
 		const { city, uf, items } = request.query;
+		let collectors: ICollector[];
 
-		const parsedItems = String(items)
-			.split(',')
-			.map(item => Number(item.trim()));
+		if (items) {
+			const parsedItems = String(items)
+				.split(',')
+				.map(item => Number(item.trim()));
 
-		const collectors = await knex('collectors')
-			.join(
-				'collectors_items',
-				'collectors.id',
-				'=',
-				'collectors_items.collector_id'
-			)
-			.whereIn('collectors_items.item_id', parsedItems)
-			.where('city', String(city))
-			.where('uf', String(uf))
-			.distinct()
-			.select('collectors.*');
+			collectors = await knex('collectors')
+				.join(
+					'collectors_items',
+					'collectors.id',
+					'=',
+					'collectors_items.collector_id'
+				)
+				.whereIn('collectors_items.item_id', parsedItems)
+				.where('city', String(city))
+				.where('uf', String(uf))
+				.distinct()
+				.select('collectors.*');
+		} else {
+			collectors = await knex('collectors')
+				.where('city', String(city))
+				.where('uf', String(uf))
+				.select('collectors.*');
+		}
 
 		const serializedCollectors = collectors.map(collector => {
 			return {
