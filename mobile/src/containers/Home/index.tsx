@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Alert } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -50,7 +50,17 @@ const Home = () => {
 	const navigation = useNavigation();
 
 	function navToCollectorsPageHandler() {
-		navigation.navigate('Collectors');
+		if (selectedCity === '0') {
+			Alert.alert(
+				'Aviso',
+				'Por favor, selecione uma UF e uma cidade antes de continuar.'
+			);
+			return;
+		}
+		navigation.navigate('Collectors', {
+			uf: selectedUf,
+			city: selectedCity,
+		});
 	}
 
 	return (

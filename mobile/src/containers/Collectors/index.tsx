@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { SvgUri } from 'react-native-svg';
 
@@ -20,6 +20,11 @@ interface ICollector {
 	image: string;
 	latitude: string;
 	longitude: string;
+}
+
+interface IRouteParams {
+	uf: string;
+	city: string;
 }
 
 const Collectors = () => {
@@ -64,16 +69,19 @@ const Collectors = () => {
 	useEffect(() => {
 		Axios.get('collectors', {
 			params: {
-				city: 'São Paulo',
-				uf: 'SP',
-				items: [1, 2],
+				city: routeParams.city,
+				uf: routeParams.uf,
+				items: selectedItems,
 			},
 		}).then(res => {
 			setCollectors(res.data);
 		});
-	}, []);
+	}, [selectedItems]);
 
 	const navigation = useNavigation();
+	const route = useRoute();
+
+	const routeParams = route.params as IRouteParams;
 
 	function navBackHandler() {
 		navigation.goBack();
