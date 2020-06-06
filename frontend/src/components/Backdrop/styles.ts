@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledBackdrop = styled.div`
 	width: 100vw;
 	height: 100vh;
-	color: var(--primary-color);
+	color: ${props => props.theme.colors.primaryColor};
 	background: #222;
 	display: flex;
 	flex-direction: column;

@@ -11,16 +11,22 @@ export const StyledCreateCollector = styled.div`
 		justify-content: space-between;
 		align-items: center;
 
-		a {
-			color: var(--title-color);
-			font-weight: bold;
-			text-decoration: none;
+		div {
 			display: flex;
-			align-items: center;
+			flex-direction: row;
 
-			svg {
+			a {
 				margin-right: 1rem;
-				color: var(--primary-color);
+				color: ${props => props.theme.colors.textColor};
+				font-weight: bold;
+				text-decoration: none;
+				display: flex;
+				align-items: center;
+
+				svg {
+					margin-right: 1rem;
+					color: ${props => props.theme.colors.primaryColor};
+				}
 			}
 		}
 	}
@@ -29,7 +35,7 @@ export const StyledCreateCollector = styled.div`
 		margin: 5rem auto;
 		padding: 4rem;
 		max-width: 730px;
-		background: #fff;
+		background: ${props => props.theme.colors.formColor};
 		border-radius: 8px;
 		display: flex;
 		flex-direction: column;
@@ -57,7 +63,7 @@ export const StyledCreateCollector = styled.div`
 
 			span {
 				font-weight: normal;
-				color: var(--text-color);
+				color: ${props => props.theme.colors.textColor};
 			}
 		}
 
@@ -86,7 +92,7 @@ export const StyledCreateCollector = styled.div`
 
 			input {
 				flex: 1;
-				background: #f0f0f5;
+				background: ${props => props.theme.colors.inputColor};
 				border-radius: 8px;
 				border: 0;
 				padding: 1rem 1.5rem;
@@ -103,7 +109,7 @@ export const StyledCreateCollector = styled.div`
 				-moz-appearance: none;
 				appearance: none;
 				flex: 1;
-				background: #f0f0f5;
+				background: ${props => props.theme.colors.backgroundColor};
 				border-radius: 8px;
 				border: 0;
 				padding: 1rem 1.5rem;
@@ -121,7 +127,7 @@ export const StyledCreateCollector = styled.div`
 			align-items: center;
 
 			input {
-				background: #f0f0f5;
+				background: ${props => props.theme.colors.inputColor};
 			}
 
 			label {
@@ -139,7 +145,7 @@ export const StyledCreateCollector = styled.div`
 		button {
 			width: 260px;
 			height: 56px;
-			background: var(--primary-color);
+			background: ${props => props.theme.colors.primaryColor};
 			border-radius: 8px;
 			color: #fff;
 			font-weight: bold;
@@ -151,7 +157,7 @@ export const StyledCreateCollector = styled.div`
 			cursor: pointer;
 
 			:hover {
-				background: #2fb86e;
+				background: ${props => props.theme.colors.secondaryColor};
 			}
 		}
 	}
@@ -163,8 +169,8 @@ export const StyledCreateCollector = styled.div`
 		list-style: none;
 
 		li {
-			background: #f5f5f5;
-			border: 2px solid #f5f5f5;
+			background: ${props => props.theme.colors.boxColor};
+			border: 2px solid ${props => props.theme.colors.boxColor};
 			height: 180px;
 			border-radius: 8px;
 			padding: 2rem 1.5rem 1rem;
@@ -180,12 +186,12 @@ export const StyledCreateCollector = styled.div`
 				margin-top: 0.8rem;
 				display: flex;
 				align-items: center;
-				color: var(--title-color);
+				color: ${props => props.theme.colors.titleColor};
 			}
 
 			&.selected {
-				background: #e1faec;
-				border: 2px solid #34cb79;
+				background: ${props => props.theme.colors.tertiaryColor};
+				border: 2px solid ${props => props.theme.colors.primaryColor};
 			}
 		}
 	}

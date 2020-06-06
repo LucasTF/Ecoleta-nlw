@@ -3,9 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 
     :root {
-        --primary-color: #34CB79;
-        --title-color: #322153;
-        --text-color: #6C6C80;
         font-family: Dosis, Arial, Helvetica, sans-serif;
         font-size: 16px;
         line-height: 1.5;
@@ -18,13 +15,13 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background: #F0F0F5;
+        background: ${props => props.theme.colors.backgroundColor};
         -webkit-font-smoothing: antialiased;
-        color: var(--text-color);
+        color: ${props => props.theme.colors.textColor};
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: var(--title-color);
+        color: ${props => props.theme.colors.titleColor};
         font-family: Ubuntu;
     }
 

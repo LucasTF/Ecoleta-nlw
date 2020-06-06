@@ -7,6 +7,7 @@ import axios from 'axios';
 import Maps from '../../components/Maps';
 import Dropzone from '../../components/Dropzone';
 import Backdrop from '../../components/Backdrop';
+import ToggleButton from '../../components/ToggleButton';
 import Axios from '../../utils/axios';
 import { HOME } from '../../routes';
 import { StyledCreateCollector } from './styles';
@@ -27,7 +28,11 @@ interface ICityResponse {
 	nome: string;
 }
 
-const CreateCollector: React.FC = () => {
+interface ICreateCollectorProps {
+	toggleTheme: () => void;
+}
+
+const CreateCollector: React.FC<ICreateCollectorProps> = ({ toggleTheme }) => {
 	const [items, setItems] = useState<IItem[]>([]);
 	const [ufs, setUfs] = useState<string[]>([]);
 	const [cities, setCities] = useState<string[]>([]);
@@ -150,10 +155,13 @@ const CreateCollector: React.FC = () => {
 			<StyledCreateCollector>
 				<header>
 					<img src={logo} alt='Ecoleta' />
-					<NavLink to={HOME}>
-						<FiArrowLeft />
-						Voltar para home
-					</NavLink>
+					<div>
+						<NavLink to={HOME}>
+							<FiArrowLeft />
+							Voltar para home
+						</NavLink>
+						<ToggleButton onClick={toggleTheme} />
+					</div>
 				</header>
 				<form onSubmit={formSubmitHandler}>
 					<h1>Cadastro do ponto de coleta</h1>

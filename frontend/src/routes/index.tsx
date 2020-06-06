@@ -7,12 +7,19 @@ import CreateCollector from '../containers/CreateCollector';
 export const HOME = process.env.PUBLIC_URL + '/';
 export const CREATE_COLLECTOR = process.env.PUBLIC_URL + '/create';
 
-export const Routes = () => {
+interface IRoutesProps {
+	toggleTheme: () => void;
+}
+
+export const Routes: React.FC<IRoutesProps> = props => {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route component={CreateCollector} path={CREATE_COLLECTOR} />
-				<Route component={Home} path={HOME} />
+				<Route
+					render={() => <CreateCollector {...props} />}
+					path={CREATE_COLLECTOR}
+				/>
+				<Route render={() => <Home {...props} />} path={HOME} />
 			</Switch>
 		</BrowserRouter>
 	);

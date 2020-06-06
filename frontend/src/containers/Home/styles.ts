@@ -18,6 +18,9 @@ export const StyledHome = styled.div`
 
 		header {
 			margin: 3rem 0 0;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		main {
@@ -29,7 +32,7 @@ export const StyledHome = styled.div`
 
 			h1 {
 				font-size: 3.5rem;
-				color: var(--title-color);
+				color: ${props => props.theme.colors.titleColor};
 				line-height: 1.2;
 			}
 
@@ -42,7 +45,7 @@ export const StyledHome = styled.div`
 				width: 100%;
 				max-width: 360px;
 				height: 5rem;
-				background: var(--primary-color);
+				background: ${props => props.theme.colors.primaryColor};
 				border-radius: 0.5rem;
 				text-decoration: none;
 				display: flex;
@@ -74,7 +77,7 @@ export const StyledHome = styled.div`
 				}
 
 				:hover {
-					background: #2fb86e;
+					background: ${props => props.theme.colors.secondaryColor};
 				}
 			}
 		}
@@ -99,6 +102,15 @@ export const StyledHome = styled.div`
 				p {
 					font-size: 1.5rem;
 				}
+			}
+		}
+	}
+
+	@media (max-height: 800px) and (max-width: 200px),
+		(max-height: 800px) and (min-width: 1000px) {
+		.container {
+			header {
+				width: 50%;
 			}
 		}
 	}

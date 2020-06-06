@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledDropzone = styled.div`
 	height: 300px;
-	background: #e1faec;
+	background: ${props => props.theme.colors.tertiaryColor};
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
@@ -20,7 +20,7 @@ const StyledDropzone = styled.div`
 		width: calc(100% - 60px);
 		height: calc(100% - 60px);
 		border-radius: 10px;
-		border: 1px dashed #4ecb79;
+		border: 1px dashed ${props => props.theme.colors.primaryColor};
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -29,7 +29,7 @@ const StyledDropzone = styled.div`
 		color: #333;
 
 		svg {
-			color: #4ecb79;
+			color: ${props => props.theme.colors.primaryColor};
 			width: 24px;
 			height: 24px;
 			margin-bottom: 0.5rem;

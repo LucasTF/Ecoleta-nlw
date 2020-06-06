@@ -6,13 +6,19 @@ import { StyledHome } from './styles';
 import { CREATE_COLLECTOR } from '../../routes';
 
 import logo from '../../assets/svg/logo.svg';
+import ToggleButton from '../../components/ToggleButton';
 
-const Home: React.FC = () => {
+interface IHomeProps {
+	toggleTheme: () => void;
+}
+
+const Home: React.FC<IHomeProps> = ({ toggleTheme }) => {
 	return (
 		<StyledHome>
 			<div className='container'>
 				<header>
 					<img src={logo} alt='Ecoleta' />
+					<ToggleButton onClick={toggleTheme} />
 				</header>
 				<main>
 					<h1>Seu marketplace de coleta de resíduos.</h1>
