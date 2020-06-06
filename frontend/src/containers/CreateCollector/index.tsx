@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import Maps from '../../components/Maps';
 import Dropzone from '../../components/Dropzone';
+import Backdrop from '../../components/Backdrop';
 import Axios from '../../utils/axios';
 import { HOME } from '../../routes';
 import { StyledCreateCollector } from './styles';
@@ -45,6 +46,8 @@ const CreateCollector: React.FC = () => {
 		whatsapp: '',
 	});
 
+	const [submited, setSubmited] = useState(false);
+
 	const history = useHistory();
 
 	useEffect(() => {
@@ -80,6 +83,14 @@ const CreateCollector: React.FC = () => {
 			.then(res => setCities(res.data.map(city => city.nome)))
 			.catch(err => console.log(err));
 	}, [selectedUf]);
+
+	useEffect(() => {
+		if (submited) {
+			setTimeout(() => {
+				history.push('/');
+			}, 4000);
+		}
+	}, [submited, history]);
 
 	function selectedUfHandler(event: ChangeEvent<HTMLSelectElement>) {
 		setSelectedUf(event.target.value);
@@ -128,130 +139,140 @@ const CreateCollector: React.FC = () => {
 
 		await Axios.post('collectors', data);
 
-		alert('Mercado cadastrado!');
-
-		history.push('/');
+		setSubmited(true);
 	}
 
-	return (
-		<StyledCreateCollector>
-			<header>
-				<img src={logo} alt='Ecoleta' />
-				<NavLink to={HOME}>
-					<FiArrowLeft />
-					Voltar para home
-				</NavLink>
-			</header>
-			<form onSubmit={formSubmitHandler}>
-				<h1>Cadastro do ponto de coleta</h1>
+	let content;
+	if (submited) {
+		content = <Backdrop />;
+	} else {
+		content = (
+			<StyledCreateCollector>
+				<header>
+					<img src={logo} alt='Ecoleta' />
+					<NavLink to={HOME}>
+						<FiArrowLeft />
+						Voltar para home
+					</NavLink>
+				</header>
+				<form onSubmit={formSubmitHandler}>
+					<h1>Cadastro do ponto de coleta</h1>
 
-				<Dropzone onFileUploaded={setSelectedImage} />
+					<Dropzone onFileUploaded={setSelectedImage} />
 
-				<fieldset>
-					<legend>
-						<h2>Dados</h2>
-					</legend>
-					<div className='field'>
-						<label htmlFor='name'>Nome da entidade</label>
-						<input
-							type='text'
-							name='name'
-							id='name'
-							onChange={inputChangedHandler}
-						/>
-					</div>
-					<div className='field-group'>
+					<fieldset>
+						<legend>
+							<h2>Dados</h2>
+						</legend>
 						<div className='field'>
-							<label htmlFor='email'>Email</label>
-							<input
-								type='email'
-								name='email'
-								id='email'
-								onChange={inputChangedHandler}
-							/>
-						</div>
-						<div className='field'>
-							<label htmlFor='whatsapp'>Whatsapp</label>
+							<label htmlFor='name'>Nome da entidade</label>
 							<input
 								type='text'
-								name='whatsapp'
-								id='whatsapp'
+								name='name'
+								id='name'
 								onChange={inputChangedHandler}
 							/>
 						</div>
-					</div>
-				</fieldset>
-
-				<fieldset>
-					<legend>
-						<h2>Endereço</h2>
-						<span>Selecione o endereço no mapa</span>
-					</legend>
-
-					<Maps onClick={mapClickHandler} marker={selectedPosition} />
-
-					<div className='field-group'>
-						<div className='field'>
-							<label htmlFor='uf'>Estado (UF)</label>
-							<select
-								name='uf'
-								id='uf'
-								value={selectedUf}
-								onChange={selectedUfHandler}
-							>
-								<option value='0'>Selecione uma UF</option>
-								{ufs.map(uf => (
-									<option value={uf} key={uf}>
-										{uf}
-									</option>
-								))}
-							</select>
+						<div className='field-group'>
+							<div className='field'>
+								<label htmlFor='email'>Email</label>
+								<input
+									type='email'
+									name='email'
+									id='email'
+									onChange={inputChangedHandler}
+								/>
+							</div>
+							<div className='field'>
+								<label htmlFor='whatsapp'>Whatsapp</label>
+								<input
+									type='text'
+									name='whatsapp'
+									id='whatsapp'
+									onChange={inputChangedHandler}
+								/>
+							</div>
 						</div>
-						<div className='field'>
-							<label htmlFor='city'>Cidade</label>
-							<select
-								name='city'
-								id='city'
-								onChange={selectedCityHandler}
-							>
-								<option value='0'>Selecione uma cidade</option>
-								{cities.map(city => (
-									<option value={city} key={city}>
-										{city}
+					</fieldset>
+
+					<fieldset>
+						<legend>
+							<h2>Endereço</h2>
+							<span>Selecione o endereço no mapa</span>
+						</legend>
+
+						<Maps
+							onClick={mapClickHandler}
+							marker={selectedPosition}
+						/>
+
+						<div className='field-group'>
+							<div className='field'>
+								<label htmlFor='uf'>Estado (UF)</label>
+								<select
+									name='uf'
+									id='uf'
+									value={selectedUf}
+									onChange={selectedUfHandler}
+								>
+									<option value='0'>Selecione uma UF</option>
+									{ufs.map(uf => (
+										<option value={uf} key={uf}>
+											{uf}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className='field'>
+								<label htmlFor='city'>Cidade</label>
+								<select
+									name='city'
+									id='city'
+									onChange={selectedCityHandler}
+								>
+									<option value='0'>
+										Selecione uma cidade
 									</option>
-								))}
-							</select>
+									{cities.map(city => (
+										<option value={city} key={city}>
+											{city}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
-					</div>
-				</fieldset>
+					</fieldset>
 
-				<fieldset>
-					<legend>
-						<h2>Itens de coleta</h2>
-						<span>Selecione um ou mais itens abaixo</span>
-					</legend>
-					<ul className='items-grid'>
-						{items.map(item => (
-							<li
-								key={item.id}
-								className={
-									selectedItems.includes(item.id)
-										? 'selected'
-										: ''
-								}
-								onClick={() => selectItemHandler(item.id)}
-							>
-								<img src={item.imageUrl} alt={item.title} />
-								<span>{item.title}</span>
-							</li>
-						))}
-					</ul>
-				</fieldset>
+					<fieldset>
+						<legend>
+							<h2>Itens de coleta</h2>
+							<span>Selecione um ou mais itens abaixo</span>
+						</legend>
+						<ul className='items-grid'>
+							{items.map(item => (
+								<li
+									key={item.id}
+									className={
+										selectedItems.includes(item.id)
+											? 'selected'
+											: ''
+									}
+									onClick={() => selectItemHandler(item.id)}
+								>
+									<img src={item.imageUrl} alt={item.title} />
+									<span>{item.title}</span>
+								</li>
+							))}
+						</ul>
+					</fieldset>
 
-				<button type='submit'>Cadastrar ponto de coleta</button>
-			</form>
-		</StyledCreateCollector>
-	);
+					<button type='submit'>Cadastrar ponto de coleta</button>
+				</form>
+			</StyledCreateCollector>
+		);
+	}
+
+	return <>{content}</>;
 };
 
 export default CreateCollector;
